@@ -30,7 +30,7 @@ class EngineBase:
                     instance.tunnel.pkey_path,
                     instance.tunnel.pkey_password,
                 )
-                self.host,self.port = self.ssh.get_ssh()
+                self.host, self.port = self.ssh.get_ssh()
 
     def __del__(self):
         if hasattr(self, 'ssh'):

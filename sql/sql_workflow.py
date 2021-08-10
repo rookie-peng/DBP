@@ -23,6 +23,7 @@ from sql.utils.resource_group import user_groups, user_instances
 from sql.utils.tasks import add_sql_schedule, del_schedule
 from sql.utils.sql_review import can_timingtask, can_cancel, can_execute, on_correct_time_period, can_view, can_rollback
 from sql.utils.workflow_audit import Audit
+from sql.utils import jira_opera
 from .models import SqlWorkflow, SqlWorkflowContent, Instance
 from django_q.tasks import async_task
 
@@ -48,6 +49,9 @@ def sql_workflow_list(request):
     limit = offset + limit
     search = request.POST.get('search')
     user = request.user
+
+    # 把jira工单写入到数据库
+    jira_opera.jira_opera(user)
 
     # 组合筛选项
     filter_dict = dict()
@@ -90,7 +94,6 @@ def sql_workflow_list(request):
         "status", "is_backup", "create_time",
         "instance__instance_name", "db_name",
         "group_name", "syntax_type")
-
     # QuerySet 序列化
     rows = [row for row in workflow_list]
     result = {"total": count, "rows": rows}
@@ -148,7 +151,7 @@ def submit(request):
     run_date_end = request.POST.get('run_date_end')
 
     # 服务器端参数验证
-    if None in [sql_content, db_name, instance_name, db_name, is_backup, demand_url]:
+    if None in [sql_content, instance_name, db_name, is_backup, demand_url]:
         context = {'errMsg': '页面提交参数可能为空'}
         return render(request, 'error.html', context)
 

@@ -123,8 +123,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'archery',
         'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',
+        'PASSWORD': '123456',
+        'HOST': '192.168.79.130',
         'PORT': '3306',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
@@ -156,24 +156,25 @@ Q_CLUSTER = {
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/0",
+        "LOCATION": "redis://192.168.79.131:6379/0",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "PASSWORD": ""
+            "PASSWORD": "123456"
         }
     },
     "dingding": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
+        "LOCATION": "redis://192.168.79.131:6379/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "PASSWORD": ""
+            "PASSWORD": "123456"
         }
     }
 }
 
 # LDAP
-ENABLE_LDAP = False
+# ENABLE_LDAP = False
+ENABLE_LDAP = True
 if ENABLE_LDAP:
     import ldap
     from django_auth_ldap.config import LDAPSearch
@@ -183,18 +184,18 @@ if ENABLE_LDAP:
         'django.contrib.auth.backends.ModelBackend',  # django系统中手动创建的用户也可使用，优先级靠后。注意这2行的顺序
     )
 
-    AUTH_LDAP_SERVER_URI = "ldap://xxx"
-    AUTH_LDAP_USER_DN_TEMPLATE = "cn=%(user)s,ou=xxx,dc=xxx,dc=xxx"
+    AUTH_LDAP_SERVER_URI = "ldap://10.66.0.6:389"
+    #AUTH_LDAP_USER_DN_TEMPLATE = "cn=%(user)s,ou=xxx,dc=xxx,dc=xxx"
+    LDAP_AUTH_USE_TLS = False
+
     # ldap认证的另一种方式,使用时注释AUTH_LDAP_USER_DN_TEMPLATE
-    """
-    AUTH_LDAP_BIND_DN = "cn=xxx,ou=xxx,dc=xxx,dc=xxx"
-    AUTH_LDAP_BIND_PASSWORD = "***********"
-    AUTH_LDAP_USER_SEARCH = LDAPSearch('ou=xxx,dc=xxx,dc=xxx',ldap.SCOPE_SUBTREE, '(cn=%(user)s)',)
-    """
+    AUTH_LDAP_BIND_DN = 'ldap'
+    AUTH_LDAP_BIND_PASSWORD = 'Sghl20170424'
+    AUTH_LDAP_USER_SEARCH = LDAPSearch('ou=数据平台研发中心,ou=树根互联,ou=SGHL,dc=irootech,dc=com',ldap.SCOPE_SUBTREE, '(&(objectClass=user)(sAMAccountName=%(user)s))',)
     AUTH_LDAP_ALWAYS_UPDATE_USER = True  # 每次登录从ldap同步用户信息
     AUTH_LDAP_USER_ATTR_MAP = {  # key为archery.sql_users字段名，value为ldap中字段名，用户同步信息
-        "username": "cn",
-        "display": "displayname",
+        "username": "sAMAccountName",
+        "display": "displayName",
         "email": "mail"
     }
 

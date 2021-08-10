@@ -87,7 +87,8 @@ DB_TYPE_CHOICES = (
     ('mongo', 'Mongo'),
     ('phoenix', 'Phoenix'),
     ('inception', 'Inception'),
-    ('goinception', 'goInception'))
+    ('goinception', 'goInception'),
+    ('clickhouse', 'clickhouse'))
 
 
 class Tunnel(models.Model):
