@@ -57,7 +57,7 @@ def sql_workflow_list(request):
     for ticket in ticket_set:
         if str(jira_obj.issue(ticket.demand_url[39:]).fields.status) != "完成":
             jira_obj.transition_issue(ticket.demand_url[39:], "完成")
-
+111
     # 组合筛选项
     filter_dict = dict()
     # 工单状态
