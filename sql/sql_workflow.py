@@ -49,12 +49,14 @@ def sql_workflow_list(request):
     limit = offset + limit
     search = request.POST.get('search')
     user = request.user
+
     # 把jira工单写入到数据库
     jira_obj = jira_opera.jira_opera(user)
     # 此处查询单子状态已经为finish状态的情况下,变更单子状态.后续可以改为在finish同时进行单子状态的变更
     ticket_set = SqlWorkflow.objects.filter(status='workflow_finish')
     for ticket in ticket_set:
-        jira_obj.transition_issue(ticket.demand_url[39:], "完成")
+        if str(jira_obj.issue(ticket.demand_url[39:]).fields.status) != "完成":
+            jira_obj.transition_issue(ticket.demand_url[39:], "完成")
 
     # 组合筛选项
     filter_dict = dict()
