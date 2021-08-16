@@ -175,6 +175,7 @@ Q_CLUSTER = {
 
 # 缓存配置
 redis_address = os.environ.get('redis')
+redis_password = os.environ.get('redis_password')
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
@@ -189,7 +190,7 @@ CACHES = {
         "LOCATION": f"redis://{redis_address}/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "PASSWORD": "123456"
+            "PASSWORD": f"{redis_password}"
         }
     }
 }
