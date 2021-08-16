@@ -195,8 +195,7 @@ CACHES = {
 }
 
 # LDAP
-ENABLE_LDAP = False
-# ENABLE_LDAP = True
+ENABLE_LDAP = os.environ.get('ENABLE_LDAP')
 if ENABLE_LDAP:
     import ldap
     from django_auth_ldap.config import LDAPSearch
