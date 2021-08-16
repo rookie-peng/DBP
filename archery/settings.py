@@ -10,7 +10,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'hfusaf2m4ot#7)fkw#di2bu6(cv0@opwmafx5n#6=3d%x^hpl6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG")
 
 ALLOWED_HOSTS = ['*']
 
@@ -118,6 +118,27 @@ SESSION_SAVE_EVERY_REQUEST = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # 关闭浏览器，则COOKIE失效
 
 # 该项目本身的mysql数据库地址
+mysql_host = os.environ.get('mysql_host')
+mysql_port = os.environ.get('mysql_port')
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'archery',
+#         'USER': 'root',
+#         'PASSWORD': '123456',
+#         'HOST': f'{mysql_host}',
+#         'PORT': 3306,
+#         'OPTIONS': {
+#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+#             'charset': 'utf8mb4'
+#         },
+#         'TEST': {
+#             'NAME': 'test_archery',
+#             'CHARSET': 'utf8mb4',
+#         },
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -125,7 +146,7 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': '123456',
         'HOST': '192.168.79.130',
-        'PORT': '3306',
+        'PORT': 3306,
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
             'charset': 'utf8mb4'
@@ -149,14 +170,15 @@ Q_CLUSTER = {
     'queue_limit': 50,
     'label': 'Django Q',
     'django_redis': 'default',
-    'sync': False  # 本地调试可以修改为True，使用同步模式
+    'sync': True  # 本地调试可以修改为True，使用同步模式
 }
 
 # 缓存配置
+redis_address = os.environ.get('redis')
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://192.168.79.131:6379/0",
+        "LOCATION": f"redis://{redis_address}/0",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "PASSWORD": "123456"
@@ -164,7 +186,7 @@ CACHES = {
     },
     "dingding": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://192.168.79.131:6379/1",
+        "LOCATION": f"redis://{redis_address}/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "PASSWORD": "123456"
@@ -173,8 +195,8 @@ CACHES = {
 }
 
 # LDAP
-# ENABLE_LDAP = False
-ENABLE_LDAP = True
+ENABLE_LDAP = False
+# ENABLE_LDAP = True
 if ENABLE_LDAP:
     import ldap
     from django_auth_ldap.config import LDAPSearch
