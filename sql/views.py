@@ -66,7 +66,7 @@ def sqlworkflow(request):
         filter_dict['group_id__in'] = group_ids
     # 其他人只能查看自己提交的工单
     else:
-        filter_dict['engineer'] = user.username
+        filter_dict['engineer'] = user
     instance_id = SqlWorkflow.objects.filter(**filter_dict).values('instance_id').distinct()
     instance = Instance.objects.filter(pk__in=instance_id)
     resource_group_id = SqlWorkflow.objects.filter(**filter_dict).values('group_id').distinct()

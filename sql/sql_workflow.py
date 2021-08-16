@@ -83,7 +83,7 @@ def sql_workflow_list(request):
         filter_dict['group_id__in'] = group_ids
     # 其他人只能查看自己提交的工单
     else:
-        filter_dict['engineer'] = user.username
+        filter_dict['engineer'] = user
 
     # 过滤组合筛选项
     workflow = SqlWorkflow.objects.filter(**filter_dict)
