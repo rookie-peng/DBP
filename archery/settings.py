@@ -120,32 +120,13 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # 关闭浏览器，则COOKIE失效
 # 该项目本身的mysql数据库地址
 mysql_host = os.environ.get('mysql_host')
 mysql_port = os.environ.get('mysql_port')
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'archery',
-#         'USER': 'root',
-#         'PASSWORD': '123456',
-#         'HOST': f'{mysql_host}',
-#         'PORT': 3306,
-#         'OPTIONS': {
-#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-#             'charset': 'utf8mb4'
-#         },
-#         'TEST': {
-#             'NAME': 'test_archery',
-#             'CHARSET': 'utf8mb4',
-#         },
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'archery',
         'USER': 'root',
         'PASSWORD': '123456',
-        'HOST': '192.168.79.130',
+        'HOST': f'{mysql_host}',
         'PORT': 3306,
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
@@ -157,6 +138,25 @@ DATABASES = {
         },
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'archery',
+#         'USER': 'root',
+#         'PASSWORD': '123456',
+#         'HOST': '192.168.79.130',
+#         'PORT': 3306,
+#         'OPTIONS': {
+#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+#             'charset': 'utf8mb4'
+#         },
+#         'TEST': {
+#             'NAME': 'test_archery',
+#             'CHARSET': 'utf8mb4',
+#         },
+#     }
+# }
 
 # Django-Q
 Q_CLUSTER = {
