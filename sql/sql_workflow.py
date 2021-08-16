@@ -49,7 +49,6 @@ def sql_workflow_list(request):
     limit = offset + limit
     search = request.POST.get('search')
     user = request.user
-    print(user,"--------------------------------------------")
     # 把jira工单写入到数据库
     jira_obj = jira_opera.jira_opera(user)
     # 此处查询单子状态已经为finish状态的情况下,变更单子状态.后续可以改为在finish同时进行单子状态的变更
