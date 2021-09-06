@@ -213,7 +213,7 @@ if ENABLE_LDAP:
     # ldap认证的另一种方式,使用时注释AUTH_LDAP_USER_DN_TEMPLATE
     AUTH_LDAP_BIND_DN = 'ldap'
     AUTH_LDAP_BIND_PASSWORD = 'Sghl20170424'
-    AUTH_LDAP_USER_SEARCH = LDAPSearch('ou=数据平台研发中心,ou=树根互联,ou=SGHL,dc=irootech,dc=com',ldap.SCOPE_SUBTREE, '(&(objectClass=user)(sAMAccountName=%(user)s))',)
+    AUTH_LDAP_USER_SEARCH = LDAPSearch('ou=树根互联,ou=SGHL,dc=irootech,dc=com',ldap.SCOPE_SUBTREE, '(&(objectClass=user)(sAMAccountName=%(user)s))',)
     AUTH_LDAP_ALWAYS_UPDATE_USER = True  # 每次登录从ldap同步用户信息
     AUTH_LDAP_USER_ATTR_MAP = {  # key为archery.sql_users字段名，value为ldap中字段名，用户同步信息
         "username": "sAMAccountName",
